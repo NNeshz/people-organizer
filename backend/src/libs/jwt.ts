@@ -2,13 +2,13 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const createAccesToken = (payload: string) => {
+export const createAccesToken = ({ id }: { id: string }) => {
   return new Promise((resolve, reject) => {
     jwt.sign(
-      payload,
+      { id },
       process.env.ACCESS_TOKEN_SECRET!,
       {
-        expiresIn: "30m",
+        expiresIn: "1h",
       },
       (err, token) => {
         if (err) reject(err);
