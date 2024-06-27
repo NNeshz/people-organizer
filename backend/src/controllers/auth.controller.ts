@@ -30,7 +30,13 @@ export const signup = async (req: Request, res: Response) => {
       //   sameSite: "none",
       maxAge: 60 * 60 * 1000, // 1 hour
     });
-    res.json(user);
+    res.status(201).json({
+      user: {
+        email: user.email,
+        username: user.username,
+        createdAt: user.createdAt,
+      },
+    });
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   }
@@ -60,7 +66,13 @@ export const login = async (req: Request, res: Response) => {
       //   sameSite: "none",
       maxAge: 60 * 60 * 1000, // 1 hour
     });
-    res.json(user);
+    res.status(202).json({
+      user: {
+        email: user.email,
+        username: user.username,
+        createdAt: user.createdAt,
+      },
+    });
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   }
@@ -69,7 +81,7 @@ export const login = async (req: Request, res: Response) => {
 export const logout = async (req: Request, res: Response) => {
   try {
     res.clearCookie("token");
-    res.sendStatus(201);
+    res.sendStatus(204);
   } catch (error) {
     res.status(500).json({ message: (error as Error).message });
   }

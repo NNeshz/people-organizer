@@ -12,7 +12,8 @@ import {
   FormDescription,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { fetchRegister } from "../api/auth";
+import { useNavigate } from "react-router-dom";
+import useUserStore from "../context/useUserStore";
 
 const regisrteFormSchema = z.object({
   username: z.string().min(3).max(20),
@@ -21,6 +22,10 @@ const regisrteFormSchema = z.object({
 });
 
 const RegisterForm = () => {
+
+  const fetchRegister = useUserStore((state) => state.register);
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof regisrteFormSchema>>({
     resolver: zodResolver(regisrteFormSchema),
     defaultValues: {
@@ -31,8 +36,10 @@ const RegisterForm = () => {
 
   async function onSubmit(values: z.infer<typeof regisrteFormSchema>) {
     try {
-      const data = fetchRegister(values)
-      console.log(data)
+      const data = await fetchRegister(values)
+      if (data?.status === 201) {
+        navigate("/dashboard")
+      } 
     } catch (error) {
       console.log("Error: ", error)
     }

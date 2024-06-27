@@ -12,7 +12,8 @@ import {
   FormDescription,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { fetchLogin } from "../api/auth";
+import { useNavigate } from "react-router-dom";
+import useUserStore from "../context/useUserStore";
 
 const loginFormSchema = z.object({
   email: z.string().email(),
@@ -20,6 +21,10 @@ const loginFormSchema = z.object({
 });
 
 const LoginForm = () => {
+
+  const fetchLogin = useUserStore((state) => state.login);
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -31,7 +36,9 @@ const LoginForm = () => {
   async function onSubmit(values: z.infer<typeof loginFormSchema>) {
     try {
       const data = await fetchLogin(values);
-      console.log(data);
+      if (data?.status === 202) {
+        navigate("/dashboard")
+      }
     } catch (error) {
       console.error("Error:", error);
     }
