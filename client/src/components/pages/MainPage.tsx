@@ -8,7 +8,7 @@ const MainPage = () => {
     <div className="w-full lg:grid lg:grid-cols-2 h-screen">
       <div className="bg-zinc-950 flex flex-col justify-center items-center h-screen px-10 md:px-28">
         <div className="flex flex-col items-center border border-zinc-900 rounded-lg p-5">
-          <Tabs defaultValue="account" className="w-full md:w-[400px]">
+          <Tabs defaultValue="login" className="w-full md:w-[400px]">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="login">Log in</TabsTrigger>
               <TabsTrigger value="register">Register</TabsTrigger>
