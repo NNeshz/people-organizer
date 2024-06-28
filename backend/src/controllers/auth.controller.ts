@@ -22,7 +22,11 @@ export const signup = async (req: Request, res: Response) => {
       },
     });
 
-    const token = await createAccesToken({ id: user.id });
+    const token = await createAccesToken({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    });
 
     res.cookie("token", token, {
       //   httpOnly: true,
@@ -58,7 +62,11 @@ export const login = async (req: Request, res: Response) => {
     if (!passwordMatch)
       return res.status(400).json({ message: "Invalid credentials" });
 
-    const token = await createAccesToken({ id: user.id });
+    const token = await createAccesToken({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+    });
 
     res.cookie("token", token, {
       //   httpOnly: true,
